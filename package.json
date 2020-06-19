@@ -1,0 +1,31 @@
+{
+  "name": "svg-component-generator",
+  "private": false,
+  "scripts": {
+    "bootstrap": "lerna bootstrap -- --production --no-optional",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "babel-jest": "^26.0.1",
+    "jest": "^26.0.1",
+    "lerna": "^3.22.1",
+    "memfs": "^3.2.0",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "rimraf": "^3.0.0",
+    "webpack": "^4.43.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-spread": "^7.10.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "loader-utils": "^1.4.0",
+    "schema-utils": "^1.0.0",
+    "svg-parser": "^2.0.4"
+  },
+  "peerDependencies": {
+    "webpack": ">=2"
+  }
+}

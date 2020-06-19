@@ -1,0 +1,10 @@
+{
+  "name": "@svg-component-generator/webpack-loader",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "@svg-component-generator/core": "0.0.1"
+  }
+}
