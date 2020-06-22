@@ -4,10 +4,14 @@ const svgParser = require('svg-parser');
 
 const AcceptProperties = {
   svg: ['viewBox'],
-  path: ['d']
+  path: ['d'],
+  circle: ['cx', 'cy', 'r']
 };
 
 const PathDefaultProps = ['fill', 'opacity', 'fillOpacity'];
+
+
+const CircleDefaultProps = ['fill', 'opacity'];
 
 
 function generatePropertiesHtml(tagName, properties) {
@@ -50,12 +54,14 @@ export function generateReactCode(name, source) {
   };
 
   let pathId = 0;
+  let circleId = 0;
 
   const paths = [];
+  const circles = [];
 
   let html = '';
   function traverseAst(node, level) {
-    if (node && node.type === 'element' && ['svg', 'path'].includes(node.tagName)) {
+    if (node && node.type === 'element' && Object.keys(AcceptProperties).includes(node.tagName)) {
       html += `\n${level}<${node.tagName}`;
 
       const properties = convertToReactProperties(node.properties);
@@ -71,6 +77,17 @@ export function generateReactCode(name, source) {
 
         html += ` {...mergedProps.path${pathId}}`;
         paths.push('path' + pathId);
+      } else if (node.tagName === 'circle') {
+        circleId++;
+        DefaultProps['circle' + circleId] = CircleDefaultProps.reduce((props, name) => {
+          if (Object.prototype.hasOwnProperty.call(properties, name)) {
+            props[name] = properties[name];
+          }
+          return props;
+        }, {});
+
+        html += ` {...mergedProps.circle${circleId}}`;
+        circles.push('circle' + circleId);
       } else if (node.tagName === 'svg') {
         html += ` {...svgProps}`;
       }
@@ -84,6 +101,7 @@ export function generateReactCode(name, source) {
 
   traverseAst(parsed.children[0], '');
 
+
   const code = (`
 import * as React from 'react';
 import merge from 'lodash/merge';
@@ -92,9 +110,10 @@ const DefaultProps = () => (${JSON.stringify(DefaultProps, null, 2)});
 
 export function ${name}(props) {
   const mergedProps = merge(DefaultProps(), props);
-  const paths = ${JSON.stringify(paths)};
+  const shapes = ${JSON.stringify([...paths, ...circles])};
+
   const svgProps = Object.keys(mergedProps).reduce((newProps,key)=>{
-    if(!paths.includes(key)){
+    if(!shapes.includes(key)){
       newProps[key] = mergedProps[key];
     }
     return newProps;
@@ -108,8 +127,9 @@ export function ${name}(props) {
 
   return {
     code: prettier.format(code, {
+      parser: 'babel',
       semi: true,
-      parser: 'babel'
+      trailingComma: 'none'
     }),
     paths
   };
