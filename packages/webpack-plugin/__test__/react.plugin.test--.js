@@ -7,7 +7,7 @@ test('Webpack Loader', async () => {
   const stats = await compiler('../../../svgs/ActionsAggregate.svg', {
     target: 'React',
     isTest: true,
-    generateInterface: true
+    typescript: true
   });
   const output = JSON.stringify(stats.toJson().modules[0].source);
 

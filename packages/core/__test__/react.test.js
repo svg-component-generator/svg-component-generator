@@ -1,19 +1,42 @@
 const fs = require('fs');
 const path = require('path');
 const prettier = require('prettier');
-const { generateComponentCode, generateComponentName } = require('../src/react');
+const { generateSvgComponent } = require('../src');
 
 
+const GenerateSvgComponentOptions = {
+  target: 'React',
+  isTest: true,
+  typescript: true
+};
 
-test('Convert svg to React Component', async () => {
+
+test('Convert ActionsAggregate.svg to React Component', async () => {
   const filePath = path.resolve(__dirname, '../../../svgs/ActionsAggregate.svg');
-
-  const name = generateComponentName(filePath);
 
   const source = fs.readFileSync(filePath, 'utf-8');
 
-  const code = generateComponentCode(name, source, { isTest: true });
+  const code = generateSvgComponent(source, {
+    ...GenerateSvgComponentOptions,
+    resourcePath: filePath
+  });
 
 
   expect(code).toBe(fs.readFileSync(path.resolve(__dirname, './ActionsAggregate.react.jsx'), 'utf-8'));
+});
+
+
+
+test('Convert Circle.svg to React Component', async () => {
+  const filePath = path.resolve(__dirname, '../../../svgs/Circle.svg');
+
+  const source = fs.readFileSync(filePath, 'utf-8');
+
+  const code = generateSvgComponent(source, {
+    ...GenerateSvgComponentOptions,
+    resourcePath: filePath
+  });
+
+
+  expect(code).toBe(fs.readFileSync(path.resolve(__dirname, './Circle.react.jsx'), 'utf-8'));
 });

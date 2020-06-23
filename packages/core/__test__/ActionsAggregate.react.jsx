@@ -4,27 +4,28 @@ import merge from "lodash/merge";
 const DefaultProps = () => ({
   style: {
     width: "1em",
-    height: "1em",
+    height: "1em"
   },
   path1: {
-    fill: "#333333",
+    fill: "#333333"
   },
   path2: {
-    fill: "#333333",
+    fill: "#333333"
   },
   path3: {
-    fill: "#333333",
+    fill: "#333333"
   },
   path4: {
-    fill: "#333333",
-  },
+    fill: "#333333"
+  }
 });
 
 export function ActionsAggregate(props) {
   const mergedProps = merge(DefaultProps(), props);
-  const paths = ["path1", "path2", "path3", "path4"];
+  const elementIds = ["path1", "path2", "path3", "path4"];
+
   const svgProps = Object.keys(mergedProps).reduce((newProps, key) => {
-    if (!paths.includes(key)) {
+    if (!elementIds.includes(key)) {
       newProps[key] = mergedProps[key];
     }
     return newProps;
