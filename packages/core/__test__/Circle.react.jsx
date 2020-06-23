@@ -11,10 +11,10 @@ const DefaultProps = () => ({
 
 export function Circle(props) {
   const mergedProps = merge(DefaultProps(), props);
-  const shapes = ["circle1"];
+  const elementIds = ["circle1"];
 
   const svgProps = Object.keys(mergedProps).reduce((newProps, key) => {
-    if (!shapes.includes(key)) {
+    if (!elementIds.includes(key)) {
       newProps[key] = mergedProps[key];
     }
     return newProps;

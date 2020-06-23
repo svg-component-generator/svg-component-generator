@@ -22,10 +22,10 @@ const DefaultProps = () => ({
 
 export function ActionsAggregate(props) {
   const mergedProps = merge(DefaultProps(), props);
-  const shapes = ["path1", "path2", "path3", "path4"];
+  const elementIds = ["path1", "path2", "path3", "path4"];
 
   const svgProps = Object.keys(mergedProps).reduce((newProps, key) => {
-    if (!shapes.includes(key)) {
+    if (!elementIds.includes(key)) {
       newProps[key] = mergedProps[key];
     }
     return newProps;

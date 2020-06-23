@@ -7,10 +7,10 @@ import { generateInterface } from './generate-interface';
 
 export function generateComponentCode(name, source, options) {
 
-  const { code: jsxComponentCode, paths } = generateReactCode(name, source, options);
+  const { code: jsxComponentCode, elementIds } = generateReactCode(name, source);
 
-  if (options.generateInterface) {
-    const interfaceContent = generateInterface(name, paths);
+  if (options.typescript) {
+    const interfaceContent = generateInterface(name, elementIds);
     fs.writeFileSync(options.resourcePath + '.d.ts', interfaceContent);
   }
 

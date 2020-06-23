@@ -1,13 +1,6 @@
 import { getOptions } from 'loader-utils';
 import validateOptions from 'schema-utils';
-import { ReactGenerator } from '@svg-component-generator/core';
-// import * as VueGenerator from './vue';
-
-
-const Generators = {
-  React: ReactGenerator,
-  // Vue: VueGenerator
-};
+import { Generators, generateSvgComponent } from '@svg-component-generator/core';
 
 
 const schema = {
@@ -27,7 +20,7 @@ const schema = {
     isTest: {
       type: 'boolean'
     },
-    generateInterface: {
+    typescript: {
       type: 'boolean'
     }
   }
@@ -44,17 +37,10 @@ export default async function (source) {
     throw new Error(`options.target must be one of ` + Object.keys(Generators).join('/'));
   }
 
-  const Generator = Generators[options.target];
+  options.resourcePath = this.resourcePath;
 
-  const name = options.name ?
-    (typeof options.name === 'string' ? options.name :
-      options.name.call(this, this.resourcePath)) :
-    Generator.generateComponentName(this.resourcePath);
+  const code = generateSvgComponent(source, options);
 
-  const code = await Generator.generateComponentCode(name, source, {
-    ...options,
-    resourcePath: this.resourcePath
-  });
 
 
   return options.isTest ? JSON.stringify(code) : code;

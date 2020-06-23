@@ -1,24 +1,22 @@
 import prettier from 'prettier';
 const svgParser = require('svg-parser');
+import {
+  ConstantAcceptProperties,
+  generateDefaultComponentProps
+} from '../common/config';
 
 
-const AcceptProperties = {
-  svg: ['viewBox'],
-  path: ['d'],
-  circle: ['cx', 'cy', 'r']
-};
-
-const PathDefaultProps = ['fill', 'opacity', 'fillOpacity'];
+const ConstantAcceptPropertyKeys = Object.keys(ConstantAcceptProperties);
 
 
-const CircleDefaultProps = ['fill', 'opacity'];
+function generateFixedPropertiesHtml(tagName, properties) {
 
-
-function generatePropertiesHtml(tagName, properties) {
+  const fixedProperties = ConstantAcceptProperties[tagName] ?
+    (ConstantAcceptProperties[tagName].fixed || []) :
+    [];
 
   return Object.entries(properties).reduce((html, [name, value]) => {
-    const acceptProperties = AcceptProperties[tagName] || [];
-    if (acceptProperties.includes(name)) {
+    if (fixedProperties.includes(name)) {
       html += ` ${name}="${value}"`;
     }
     return html;
@@ -26,73 +24,78 @@ function generatePropertiesHtml(tagName, properties) {
 }
 
 
-function convertToReactProperties(properties) {
-  const reactProperties = { ...properties };
-  if (Object.prototype.hasOwnProperty.call(reactProperties, 'viewbox')) {
-    reactProperties.viewBox = reactProperties.viewbox;
-    delete reactProperties.viewbox;
+const ReactPropsMap = {
+  svg: {
+    'viewbox': 'viewBox'
+  },
+  path: {
+    'fill-opacity': 'fillOpacity',
+    'stroke-width': 'strokeWidth'
+  },
+  circle: {
+    'stroke-width': 'strokeWidth'
+  }
+};
+
+
+/**
+ * convert svg properties to React props
+ * @param {*} tagName string
+ * @param {*} properties object
+ */
+function convertToReactProps(tagName, properties) {
+  if (!Object.prototype.hasOwnProperty.call(ReactPropsMap, tagName)) {
+    return properties;
   }
 
-  if (Object.prototype.hasOwnProperty.call(reactProperties, 'fill-opacity')) {
-    reactProperties.fillOpacity = reactProperties['fill-opacity'];
-    delete reactProperties['fill-opacity'];
-  }
+  const map = ReactPropsMap[tagName];
 
+  return Object.keys(properties).reduce((props, key) => {
+    if (Object.prototype.hasOwnProperty.call(map, key)) {
+      props[map[key]] = properties[key];
+    } else {
+      props[key] = properties[key];
+    }
 
-  return reactProperties;
+    return props;
+  }, {});
+
 }
 
 
 export function generateReactCode(name, source) {
   const parsed = svgParser.parse(source);
 
-  const DefaultProps = {
-    style: {
-      width: '1em',
-      height: '1em'
-    }
-  };
+  const DefaultProps = generateDefaultComponentProps();
 
-  let pathId = 0;
-  let circleId = 0;
+  const Shapes = { path: [], circle: [] };
 
-  const paths = [];
-  const circles = [];
 
   let html = '';
   function traverseAst(node, level) {
-    if (node && node.type === 'element' && Object.keys(AcceptProperties).includes(node.tagName)) {
+    if (node && node.type === 'element' && ConstantAcceptPropertyKeys.includes(node.tagName)) {
       html += `\n${level}<${node.tagName}`;
 
-      const properties = convertToReactProperties(node.properties);
+      const properties = convertToReactProps(node.tagName, node.properties);
 
-      if (node.tagName === 'path') {
-        pathId++;
-        DefaultProps['path' + pathId] = PathDefaultProps.reduce((props, name) => {
-          if (Object.prototype.hasOwnProperty.call(properties, name)) {
-            props[name] = properties[name];
-          }
-          return props;
-        }, {});
-
-        html += ` {...mergedProps.path${pathId}}`;
-        paths.push('path' + pathId);
-      } else if (node.tagName === 'circle') {
-        circleId++;
-        DefaultProps['circle' + circleId] = CircleDefaultProps.reduce((props, name) => {
-          if (Object.prototype.hasOwnProperty.call(properties, name)) {
-            props[name] = properties[name];
-          }
-          return props;
-        }, {});
-
-        html += ` {...mergedProps.circle${circleId}}`;
-        circles.push('circle' + circleId);
-      } else if (node.tagName === 'svg') {
+      if (node.tagName === 'svg') {
         html += ` {...svgProps}`;
+      } else {
+        const elementId = node.tagName + (Shapes[node.tagName].length + 1);
+        const configurableProps = ConstantAcceptProperties[node.tagName].configurable || [];
+
+        DefaultProps[elementId] = configurableProps.reduce((props, name) => {
+          if (Object.prototype.hasOwnProperty.call(properties, name)) {
+            props[name] = properties[name];
+          }
+          return props;
+        }, {});
+
+        html += ` {...mergedProps.${elementId}}`;
+        Shapes[node.tagName].push(elementId);
       }
 
-      html += generatePropertiesHtml(node.tagName, properties);
+      html += generateFixedPropertiesHtml(node.tagName, properties);
       html += '>';
       node.children.forEach(subnode => traverseAst(subnode, level + '  '));
       html += `</${node.tagName}>\n`;
@@ -102,6 +105,10 @@ export function generateReactCode(name, source) {
   traverseAst(parsed.children[0], '');
 
 
+  const elementIds = Object.values(Shapes).reduce((elementIds, ids) => {
+    return elementIds.concat(ids);
+  }, []);
+
   const code = (`
 import * as React from 'react';
 import merge from 'lodash/merge';
@@ -110,10 +117,10 @@ const DefaultProps = () => (${JSON.stringify(DefaultProps, null, 2)});
 
 export function ${name}(props) {
   const mergedProps = merge(DefaultProps(), props);
-  const shapes = ${JSON.stringify([...paths, ...circles])};
+  const elementIds = ${JSON.stringify(elementIds)};
 
   const svgProps = Object.keys(mergedProps).reduce((newProps,key)=>{
-    if(!shapes.includes(key)){
+    if(!elementIds.includes(key)){
       newProps[key] = mergedProps[key];
     }
     return newProps;
@@ -131,6 +138,6 @@ export function ${name}(props) {
       semi: true,
       trailingComma: 'none'
     }),
-    paths
+    elementIds
   };
 }
