@@ -9,7 +9,7 @@ const DefaultProps = () => ({
   circle1: {}
 });
 
-export function Circle(props) {
+export default function Circle(props) {
   const mergedProps = merge(DefaultProps(), props);
   const elementIds = ["circle1"];
 

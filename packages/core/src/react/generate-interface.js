@@ -52,7 +52,7 @@ export interface IProps extends React.SVGAttributes<any> {
   }).join('\n  ')}
 }
 
-export function ${name}(props:IProps): JSX.Element;
+export default function ${name}(props:IProps): JSX.Element;
 `;
 
   return componentInterface;

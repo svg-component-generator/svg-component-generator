@@ -11,4 +11,4 @@ export interface IProps extends React.SVGAttributes<any> {
   circle1?: ICircleProps;
 }
 
-export function Circle(props:IProps): JSX.Element;
+export default function Circle(props:IProps): JSX.Element;

@@ -10,5 +10,13 @@
     "access": "public",
     "directory": "dist"
   },
+  "dependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-spread": "^7.10.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "loader-utils": "^1.4.0",
+    "schema-utils": "^1.0.0",
+    "svg-parser": "^2.0.4"
+  },
   "gitHead": "b29580767b4e262ec29a5eb6d446d738a9879f01"
 }
