@@ -9,5 +9,9 @@
   },
   "devDependencies": {
     "raw-loader": "^4.0.1"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,5 +1,4 @@
 {
-  "private": false,
   "packages": [
     "packages/*"
   ],
@@ -12,8 +11,5 @@
       "--no-optional",
       "--hoist"
     ]
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

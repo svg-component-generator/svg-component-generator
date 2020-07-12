@@ -6,5 +6,9 @@
   },
   "dependencies": {
     "@svg-component-generator/core": "^0.1.0-alpha.0"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }
