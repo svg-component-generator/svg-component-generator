@@ -1,17 +1,19 @@
 {
   "name": "@svg-component-generator/webpack-loader",
-  "version": "0.1.1-alpha.0",
+  "version": "0.1.2-alpha.0",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepare": "bash scripts/prepare.sh"
   },
   "dependencies": {
-    "@svg-component-generator/core": "^0.1.1-alpha.0"
+    "@svg-component-generator/core": "^0.1.2-alpha.0"
   },
   "devDependencies": {
     "raw-loader": "^4.0.1"
   },
   "private": false,
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist"
   }
 }
