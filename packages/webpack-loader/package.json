@@ -1,6 +1,6 @@
 {
   "name": "@svg-component-generator/webpack-loader",
-  "version": "0.1.5-alpha.0",
+  "version": "0.1.4-alpha.0",
   "scripts": {
     "test": "jest"
   },
@@ -14,6 +14,5 @@
   "publishConfig": {
     "access": "public",
     "directory": "dist"
-  },
-  "gitHead": "b29580767b4e262ec29a5eb6d446d738a9879f01"
+  }
 }
