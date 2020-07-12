@@ -1,11 +1,11 @@
 {
   "name": "@svg-component-generator/webpack-loader",
-  "version": "0.1.4-alpha.0",
+  "version": "0.1.5-alpha.0",
   "scripts": {
     "test": "jest"
   },
   "dependencies": {
-    "@svg-component-generator/core": "^0.1.4-alpha.0"
+    "@svg-component-generator/core": "^0.1.5-alpha.0"
   },
   "devDependencies": {
     "raw-loader": "^4.0.1"
