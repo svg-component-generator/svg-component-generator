@@ -3,7 +3,8 @@
   "private": false,
   "scripts": {
     "bootstrap": "lerna bootstrap -- --production --no-optional",
-    "test": "jest"
+    "test": "jest",
+    "pretest": "lerna link --force-local"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",

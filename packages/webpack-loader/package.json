@@ -6,5 +6,8 @@
   },
   "dependencies": {
     "@svg-component-generator/core": "0.0.1"
+  },
+  "devDependencies": {
+    "raw-loader": "^4.0.1"
   }
 }

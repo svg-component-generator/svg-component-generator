@@ -15,6 +15,9 @@ module.exports = (fixture, options = {}) => {
         test: /\.svg$/,
         use: [
           {
+            loader: 'raw-loader'
+          },
+          {
             loader: path.resolve(__dirname, '../src/index.js'),
             options
           }

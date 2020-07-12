@@ -9,6 +9,10 @@ const schema = {
   properties: {
     target: {
       type: 'string',
+      description: 'jsx,js'
+    },
+    component: {
+      type: 'string',
       description: 'Which component you what'
     },
     name: {
@@ -16,9 +20,6 @@ const schema = {
         { instanceof: 'Function' },
         { type: 'string' }
       ]
-    },
-    isTest: {
-      type: 'boolean'
     },
     typescript: {
       type: 'boolean'
@@ -28,13 +29,13 @@ const schema = {
 
 export default async function (source) {
 
-  const options = Object.assign({ target: 'React' }, getOptions(this));
+  const options = Object.assign({ component: 'React' }, getOptions(this));
 
   validateOptions(schema, options, 'svg component loader');
 
 
-  if (!Object.prototype.hasOwnProperty.call(Generators, options.target)) {
-    throw new Error(`options.target must be one of ` + Object.keys(Generators).join('/'));
+  if (!Object.prototype.hasOwnProperty.call(Generators, options.component)) {
+    throw new Error(`options.component must be one of ` + Object.keys(Generators).join('/'));
   }
 
   options.resourcePath = this.resourcePath;
@@ -43,7 +44,7 @@ export default async function (source) {
 
 
 
-  return options.isTest ? JSON.stringify(code) : code;
+  return code;
 
 }
 
