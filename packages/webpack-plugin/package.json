@@ -10,12 +10,7 @@
   },
   "private": false,
   "publishConfig": {
-    "access": "public",
-    "directory": [
-      "dist",
-      "package.json",
-      "README.md",
-      "README_zh-CN.md"
-    ]
-  }
+    "access": "public"
+  },
+  "files": ["dist", "package.json", "README.md", "README_zh-CN.md"]
 }

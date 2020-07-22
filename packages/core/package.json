@@ -8,14 +8,9 @@
   "main": "index.js",
   "private": false,
   "publishConfig": {
-    "access": "public",
-    "directory": [
-      "dist",
-      "package.json",
-      "README.md",
-      "README_zh-CN.md"
-    ]
+    "access": "public"
   },
+  "files": ["dist", "package.json", "README.md", "README_zh-CN.md"],
   "dependencies": {
     "@babel/core": "^7.10.2",
     "@babel/plugin-transform-spread": "^7.10.1",
