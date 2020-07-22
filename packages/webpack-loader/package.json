@@ -1,12 +1,12 @@
 {
   "name": "@svg-component-generator/webpack-loader",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "test": "jest",
     "codecheck": "npx eslint \"src/**/*.ts\""
   },
   "dependencies": {
-    "@svg-component-generator/core": "^0.2.0"
+    "@svg-component-generator/core": "^0.2.1"
   },
   "devDependencies": {
     "raw-loader": "^4.0.1"
@@ -15,5 +15,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "files":["dist","package.json","README.md","README_zh-CN.md"]
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "README_zh-CN.md"
+  ]
 }

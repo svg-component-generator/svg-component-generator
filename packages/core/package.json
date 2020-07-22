@@ -1,6 +1,6 @@
 {
   "name": "@svg-component-generator/core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "test": "jest",
     "codecheck": "npx eslint \"src/**/*.ts\""
@@ -10,7 +10,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": ["dist", "package.json", "README.md", "README_zh-CN.md"],
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "README_zh-CN.md"
+  ],
   "dependencies": {
     "@babel/core": "^7.10.2",
     "@babel/plugin-transform-spread": "^7.10.1",
