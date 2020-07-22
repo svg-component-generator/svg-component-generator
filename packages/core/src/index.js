@@ -8,13 +8,12 @@ export const Generators = {
 
 export function generateSvgComponent(source, options) {
 
-  const Generator = Generators[options.target];
+  const Generator = Generators[options.component];
 
   const name = options.name ?
     (typeof options.name === 'string' ? options.name :
       options.name(options.resourcePath)) :
     Generator.generateComponentName(options.resourcePath);
-
 
 
   const code = Generator.generateComponentCode(name, source, options);

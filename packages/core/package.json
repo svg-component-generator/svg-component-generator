@@ -1,9 +1,21 @@
 {
   "name": "@svg-component-generator/core",
-  "version": "0.0.1",
+  "version": "0.1.5-alpha.0",
   "scripts": {
     "test": "jest"
   },
-  "main": "src/index.js",
-  "dependencies": {}
+  "main": "index.js",
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  },
+  "dependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-spread": "^7.10.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "loader-utils": "^1.4.0",
+    "schema-utils": "^1.0.0",
+    "svg-parser": "^2.0.4"
+  }
 }

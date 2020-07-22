@@ -15,4 +15,4 @@ export interface IProps extends React.SVGAttributes<any> {
   path4?: IPathProps;
 }
 
-export function ActionsAggregate(props:IProps): JSX.Element;
+export default function ActionsAggregate(props:IProps): JSX.Element;

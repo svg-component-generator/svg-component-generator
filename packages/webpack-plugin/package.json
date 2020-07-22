@@ -1,10 +1,15 @@
 {
   "name": "@svg-component-generator/webpack-plugin",
-  "version": "0.0.1",
+  "version": "0.1.4-alpha.0",
   "scripts": {
     "test": "jest"
   },
   "dependencies": {
-    "@svg-component-generator/core": "0.0.1"
+    "@svg-component-generator/core": "^0.1.5-alpha.0"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
   }
 }

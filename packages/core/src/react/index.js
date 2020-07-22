@@ -14,8 +14,7 @@ export function generateComponentCode(name, source, options) {
     fs.writeFileSync(options.resourcePath + '.d.ts', interfaceContent);
   }
 
-  const jsComponentCode = convertToJs(jsxComponentCode);
-  return options.isTest ? jsxComponentCode : jsComponentCode;
+  return options.target === 'jsx' ? jsxComponentCode : convertToJs(jsxComponentCode);
 }
 
 

@@ -115,7 +115,7 @@ import merge from 'lodash/merge';
 
 const DefaultProps = () => (${JSON.stringify(DefaultProps, null, 2)});
 
-export function ${name}(props) {
+export default function ${name}(props) {
   const mergedProps = merge(DefaultProps(), props);
   const elementIds = ${JSON.stringify(elementIds)};
 

@@ -20,7 +20,7 @@ const DefaultProps = () => ({
   }
 });
 
-export function ActionsAggregate(props) {
+export default function ActionsAggregate(props) {
   const mergedProps = merge(DefaultProps(), props);
   const elementIds = ["path1", "path2", "path3", "path4"];
 

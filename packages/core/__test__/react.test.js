@@ -1,12 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const prettier = require('prettier');
 const { generateSvgComponent } = require('../src');
 
 
 const GenerateSvgComponentOptions = {
-  target: 'React',
-  isTest: true,
+  component: 'React',
+  target: 'jsx',
   typescript: true
 };
 
