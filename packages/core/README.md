@@ -1,6 +1,6 @@
 # @svg-component-generator/core
 
-The core of `@svg-component-generator/*`, which can be used in nodejs.
+The core of `@svg-component-generator/*`, which can be used in nodejs and browser.
 
 ## Install
 ```bash

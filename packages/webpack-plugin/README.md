@@ -1,0 +1,3 @@
+# @svg-component-generator/webpack-plugin
+
+Comming soon...

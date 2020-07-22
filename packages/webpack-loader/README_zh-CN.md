@@ -19,7 +19,7 @@ rules: [{
       {
         component: 'React',
         target: 'jsx',
-        typescript: true
+        declaration: true
       }
     }
   ]
@@ -40,7 +40,7 @@ rules: [{
 
 指定生成的文件类型。如果为 `jsx` 则生成的代码中 `svg`标签将会以 `jsx` 的格式形式，一般需要再使用额外的  `loader` 继续处理。
 
-#### typescript
+#### declaration
 类型: `Boolean` 默认为: `false`
 
 指定是否生成类型文件(.d.ts)，如果设置为`true`，则类型文件会自动生成在图标在所文件夹中。

@@ -1,22 +1,22 @@
 /**
  * @jest-environment node
  */
-import fs from 'fs';
-import path from 'path';
-import compiler from './compiler.js';
+const fs = require('fs');
+const path = require('path');
+const compiler = require('./compiler');
 
 test('Webpack Loader', async () => {
   const stats = await compiler('../../../svgs/ActionsAggregate.svg', {
     component: 'React',
     target: 'jsx',
-    typescript: true
+    declaration: true
   });
 
-  const output = stats.toJson().modules[0].source;
+  const source = stats.toJson().modules[0].source;
 
   const expectJsx = JSON.stringify(fs.readFileSync(path.resolve(__dirname, '../../core/__test__/ActionsAggregate.react.jsx'), 'utf-8'));
 
   const expectOutput = `export default ${expectJsx};`;
 
-  expect(output).toBe(expectOutput);
+  expect(source).toBe(expectOutput);
 });

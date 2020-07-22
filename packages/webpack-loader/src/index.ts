@@ -1,9 +1,11 @@
+import path from 'path';
 import { getOptions } from 'loader-utils';
 import validateOptions from 'schema-utils';
+import { Schema } from 'schema-utils/declarations/validate';
 import { Generators, generateSvgComponent } from '@svg-component-generator/core';
 
 
-const schema = {
+const schema: Schema = {
   type: 'object',
   additionalProperties: false,
   properties: {
@@ -15,37 +17,39 @@ const schema = {
       type: 'string',
       description: 'Which component you what'
     },
-    name: {
+    componentName: {
       anyOf: [
         { instanceof: 'Function' },
         { type: 'string' }
       ]
     },
-    typescript: {
+    declaration: {
       type: 'boolean'
     }
   }
 };
 
-export default async function (source) {
+export default async function (source: string) {
 
-  const options = Object.assign({ component: 'React' }, getOptions(this));
+  const options = Object.assign({
+    component: 'React',
+    componentName: path.parse(this.resourcePath).name
+  }, getOptions(this));
 
-  validateOptions(schema, options, 'svg component loader');
+  validateOptions(schema, options, {
+    name: 'svg component loader'
+  });
 
 
   if (!Object.prototype.hasOwnProperty.call(Generators, options.component)) {
-    throw new Error(`options.component must be one of ` + Object.keys(Generators).join('/'));
+    throw new Error(`options.component must be one of ` + Object.keys(Generators!).join('/'));
   }
 
-  options.resourcePath = this.resourcePath;
 
-  const code = generateSvgComponent(source, options);
-
+  const { jsxComponentCode } = generateSvgComponent(source, options);
 
 
-  return code;
+
+  return jsxComponentCode;
 
 }
-
-
