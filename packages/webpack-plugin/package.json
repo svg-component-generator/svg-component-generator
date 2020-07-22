@@ -1,12 +1,12 @@
 {
   "name": "@svg-component-generator/webpack-plugin",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "scripts": {
     "test": "jest",
     "codecheck": "npx eslint \"src/**/*.ts\""
   },
   "dependencies": {
-    "@svg-component-generator/core": "^0.2.1"
+    "@svg-component-generator/core": "^0.2.2"
   },
   "private": false,
   "main": "dist/index.js",
