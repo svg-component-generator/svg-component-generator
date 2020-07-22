@@ -5,7 +5,7 @@
     "test": "jest",
     "codecheck": "npx eslint \"src/**/*.ts\""
   },
-  "main": "index.js",
+  "main": "dist/index.js",
   "private": false,
   "publishConfig": {
     "access": "public"
