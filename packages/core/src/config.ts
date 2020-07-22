@@ -35,7 +35,9 @@ export const ConstantAcceptProperties = {
 
 
 
-export const generateDefaultComponentProps = () => ({
+export const generateDefaultComponentProps = (): {
+  [key: string]: any
+} => ({
   style: {
     width: '1em',
     height: '1em'

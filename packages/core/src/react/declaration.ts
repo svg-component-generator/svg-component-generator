@@ -18,9 +18,9 @@ interface ICircleProps {
   }
 };
 
-const shapes = Object.keys(ShapeIProps);
+const shapes = Object.keys(ShapeIProps) as Array<keyof typeof ShapeIProps>;
 
-function getShapeWithElementId(elementId) {
+function getShapeWithElementId(elementId: string) {
   return shapes.find(shape => elementId.startsWith(shape));
 }
 
@@ -28,9 +28,9 @@ function getShapeWithElementId(elementId) {
 /**
  * 生成组件的类型声明文件
  */
-export function generateInterface(name, elementIds) {
+export function generateDeclaration(componentName: string, elementIds: string[]) {
 
-  const componentInterface = `\
+  const componentDeclaration = `\
 import * as React from 'react';
 
   ${shapes.map((shape) => {
@@ -44,7 +44,7 @@ export interface IProps extends React.SVGAttributes<any> {
   ${elementIds.map((elementId) => {
     const shape = getShapeWithElementId(elementId);
 
-    if (ShapeIProps[shape]) {
+    if (shape && ShapeIProps[shape]) {
       return `${elementId}?: ${ShapeIProps[shape].name};`;
     }
 
@@ -52,8 +52,8 @@ export interface IProps extends React.SVGAttributes<any> {
   }).join('\n  ')}
 }
 
-export default function ${name}(props:IProps): JSX.Element;
+export default function ${componentName}(props:IProps): JSX.Element;
 `;
 
-  return componentInterface;
+  return componentDeclaration;
 }

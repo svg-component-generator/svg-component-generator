@@ -6,7 +6,7 @@ const { generateSvgComponent } = require('../src');
 const GenerateSvgComponentOptions = {
   component: 'React',
   target: 'jsx',
-  typescript: true
+  declaration: true
 };
 
 
@@ -15,13 +15,13 @@ test('Convert ActionsAggregate.svg to React Component', async () => {
 
   const source = fs.readFileSync(filePath, 'utf-8');
 
-  const code = generateSvgComponent(source, {
+  const { jsxComponentCode } = generateSvgComponent(source, {
     ...GenerateSvgComponentOptions,
-    resourcePath: filePath
+    componentName: path.parse(filePath).name
   });
 
 
-  expect(code).toBe(fs.readFileSync(path.resolve(__dirname, './ActionsAggregate.react.jsx'), 'utf-8'));
+  expect(jsxComponentCode).toBe(fs.readFileSync(path.resolve(__dirname, './ActionsAggregate.react.jsx'), 'utf-8'));
 });
 
 
@@ -31,11 +31,11 @@ test('Convert Circle.svg to React Component', async () => {
 
   const source = fs.readFileSync(filePath, 'utf-8');
 
-  const code = generateSvgComponent(source, {
+  const { jsxComponentCode } = generateSvgComponent(source, {
     ...GenerateSvgComponentOptions,
-    resourcePath: filePath
+    componentName: path.parse(filePath).name
   });
 
 
-  expect(code).toBe(fs.readFileSync(path.resolve(__dirname, './Circle.react.jsx'), 'utf-8'));
+  expect(jsxComponentCode).toBe(fs.readFileSync(path.resolve(__dirname, './Circle.react.jsx'), 'utf-8'));
 });

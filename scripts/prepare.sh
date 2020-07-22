@@ -1,10 +1,13 @@
 #!/bin/sh
 
-./node_modules/.bin/babel packages/core/src --out-dir packages/core/dist
+rm -rf packages/core/dist
+./node_modules/.bin/babel --config-file ./.babelrc.js packages/core/src --out-dir packages/core/dist --extensions .ts
 
 
-./node_modules/.bin/babel packages/webpack-loader/src --out-dir packages/webpack-loader/dist
+rm -rf packages/webpack-loader/dist
+./node_modules/.bin/babel --config-file ./.babelrc.js packages/webpack-loader/src --out-dir packages/webpack-loader/dist --extensions .ts
 
 
-./node_modules/.bin/babel packages/webpack-plugin/src --out-dir packages/webpack-plugin/dist
+rm -rf packages/webpack-plugin/dist
+./node_modules/.bin/babel --config-file ./.babelrc.js packages/webpack-plugin/src --out-dir packages/webpack-plugin/dist --extensions .ts
 

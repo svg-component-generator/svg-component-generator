@@ -5,16 +5,42 @@
     "bootstrap": "lerna bootstrap",
     "test": "bash scripts/test.sh"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test"
+    }
+  },
+  "lint-staged": {
+    "packages/core/src/**/*.{js,ts,tsx}": [
+      "cd packages/core && npm run codecheck"
+    ],
+    "packages/webpack-loader/src/**/*.{js,ts,tsx}": [
+      "cd packages/webpack-loader && npm run codecheck"
+    ],
+    "packages/webpack-plugin/src/**/*.{js,ts,tsx}": [
+      "cd packages/webpack-plugin && npm run codecheck"
+    ]
+  },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/plugin-transform-typescript": "^7.10.5",
     "@babel/preset-env": "^7.10.2",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^26.0.5",
+    "@types/loader-utils": "^2.0.1",
     "babel-jest": "^26.0.1",
-    "jest": "^26.0.1",
+    "husky": "^4.2.5",
+    "jest": "^26.1.0",
     "lerna": "^3.22.1",
+    "lint-staged": "^10.2.11",
     "memfs": "^3.2.0",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "rimraf": "^3.0.0",
+    "ts-jest": "^26.1.3",
+    "typescript": "^3.9.7",
     "webpack": "^4.43.0"
   },
   "dependencies": {

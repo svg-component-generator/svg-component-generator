@@ -2,11 +2,13 @@
 
 bash scripts/prepare.sh
 
-cp packages/core/package.json packages/core/dist
+root=$PWD
 
-cp packages/webpack-loader/package.json packages/webpack-loader/dist
+cd $root/packages/core && npm run copy
 
-cp packages/webpack-plugin/package.json packages/webpack-plugin/dist
+cd $root/packages/webpack-loader && npm run copy
+
+cd $root/packages/webpack-plugin && npm run copy
 
 
-./node_modules/.bin/lerna publish
+cd $root && ./node_modules/.bin/lerna publish

@@ -18,7 +18,7 @@ module.exports = (fixture, options = {}) => {
             loader: 'raw-loader'
           },
           {
-            loader: path.resolve(__dirname, '../src/index.js'),
+            loader: path.resolve(__dirname, '../dist/index.js'),
             options
           }
         ]

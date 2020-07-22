@@ -9,5 +9,8 @@ dist/
 .history/
 test
 
+yarn.lock
+package-lock.json
+
 yarn-error.log
 lerna-debug.log

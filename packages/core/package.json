@@ -2,7 +2,9 @@
   "name": "@svg-component-generator/core",
   "version": "0.1.5-alpha.0",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "codecheck": "npx eslint \"src/**/*.ts\"",
+    "copy": "cp package.json README.md README_zh-CN.md dist/"
   },
   "main": "index.js",
   "private": false,

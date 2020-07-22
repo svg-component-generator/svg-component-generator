@@ -3,13 +3,16 @@ const svgParser = require('svg-parser');
 import {
   ConstantAcceptProperties,
   generateDefaultComponentProps
-} from '../common/config';
+} from '../config';
 
 
 const ConstantAcceptPropertyKeys = Object.keys(ConstantAcceptProperties);
 
 
-function generateFixedPropertiesHtml(tagName, properties) {
+function generateFixedPropertiesHtml(
+  tagName: keyof typeof ConstantAcceptProperties,
+  properties: { [key: string]: string | number }
+) {
 
   const fixedProperties = ConstantAcceptProperties[tagName] ?
     (ConstantAcceptProperties[tagName].fixed || []) :
@@ -43,12 +46,15 @@ const ReactPropsMap = {
  * @param {*} tagName string
  * @param {*} properties object
  */
-function convertToReactProps(tagName, properties) {
+function convertToReactProps(
+  tagName: keyof typeof ReactPropsMap,
+  properties: { [key: string]: string | number }
+) {
   if (!Object.prototype.hasOwnProperty.call(ReactPropsMap, tagName)) {
     return properties;
   }
 
-  const map = ReactPropsMap[tagName];
+  const map = ReactPropsMap[tagName] as { [key: string]: any };
 
   return Object.keys(properties).reduce((props, key) => {
     if (Object.prototype.hasOwnProperty.call(map, key)) {
@@ -58,21 +64,21 @@ function convertToReactProps(tagName, properties) {
     }
 
     return props;
-  }, {});
+  }, {} as { [key: string]: any });
 
 }
 
 
-export function generateReactCode(name, source) {
+export function generateReactCode(componentName: string, source: string) {
   const parsed = svgParser.parse(source);
 
   const DefaultProps = generateDefaultComponentProps();
 
-  const Shapes = { path: [], circle: [] };
+  const Shapes: { [key: string]: string[] } = { path: [], circle: [] };
 
 
   let html = '';
-  function traverseAst(node, level) {
+  function traverseAst(node: any, level: string) {
     if (node && node.type === 'element' && ConstantAcceptPropertyKeys.includes(node.tagName)) {
       html += `\n${level}<${node.tagName}`;
 
@@ -82,9 +88,9 @@ export function generateReactCode(name, source) {
         html += ` {...svgProps}`;
       } else {
         const elementId = node.tagName + (Shapes[node.tagName].length + 1);
-        const configurableProps = ConstantAcceptProperties[node.tagName].configurable || [];
+        const configurableProps = (<any>ConstantAcceptProperties)[node.tagName].configurable || [];
 
-        DefaultProps[elementId] = configurableProps.reduce((props, name) => {
+        DefaultProps[elementId] = configurableProps.reduce((props: any, name: string) => {
           if (Object.prototype.hasOwnProperty.call(properties, name)) {
             props[name] = properties[name];
           }
@@ -97,7 +103,7 @@ export function generateReactCode(name, source) {
 
       html += generateFixedPropertiesHtml(node.tagName, properties);
       html += '>';
-      node.children.forEach(subnode => traverseAst(subnode, level + '  '));
+      node.children.forEach((subnode: any) => traverseAst(subnode, level + '  '));
       html += `</${node.tagName}>\n`;
     }
   }
@@ -115,7 +121,7 @@ import merge from 'lodash/merge';
 
 const DefaultProps = () => (${JSON.stringify(DefaultProps, null, 2)});
 
-export default function ${name}(props) {
+export default function ${componentName}(props) {
   const mergedProps = merge(DefaultProps(), props);
   const elementIds = ${JSON.stringify(elementIds)};
 

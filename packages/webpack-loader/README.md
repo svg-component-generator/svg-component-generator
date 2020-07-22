@@ -19,7 +19,7 @@ rules: [{
       {
         component: 'React',
         target: 'jsx',
-        typescript: true
+        declaration: true
       }
     }
   ]
@@ -41,7 +41,7 @@ Type: `jsx | js` Default: `jsx`
 
 Specifies the code
 
-#### typescript
+#### declaration
 Type: `Boolean` Default: `false`
 
 指定是否生成类型文件(.d.ts)，如果设置为`true`，则类型文件会自动生成在图标在所文件夹中。
