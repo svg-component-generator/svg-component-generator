@@ -1,16 +1,20 @@
 {
   "name": "@svg-component-generator/core",
-  "version": "0.1.5-alpha.0",
+  "version": "0.2.0",
   "scripts": {
     "test": "jest",
-    "codecheck": "npx eslint \"src/**/*.ts\"",
-    "copy": "cp package.json README.md README_zh-CN.md dist/"
+    "codecheck": "npx eslint \"src/**/*.ts\""
   },
   "main": "index.js",
   "private": false,
   "publishConfig": {
     "access": "public",
-    "directory": "dist"
+    "directory": [
+      "dist",
+      "package.json",
+      "README.md",
+      "README_zh-CN.md"
+    ]
   },
   "dependencies": {
     "@babel/core": "^7.10.2",

@@ -40,7 +40,6 @@ export default async function (source: string) {
     name: 'svg component loader'
   });
 
-  console.log(JSON.stringify(options));
 
   if (!Object.prototype.hasOwnProperty.call(Generators, options.component)) {
     throw new Error(`options.component must be one of ` + Object.keys(Generators!).join('/'));

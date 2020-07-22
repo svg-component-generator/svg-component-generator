@@ -1,13 +1,12 @@
 {
   "name": "@svg-component-generator/webpack-loader",
-  "version": "0.1.4-alpha.0",
+  "version": "0.2.0",
   "scripts": {
     "test": "jest",
-    "codecheck": "npx eslint \"src/**/*.ts\"",
-    "copy": "cp package.json README.md README_zh-CN.md dist/"
+    "codecheck": "npx eslint \"src/**/*.ts\""
   },
   "dependencies": {
-    "@svg-component-generator/core": "^0.1.5-alpha.0"
+    "@svg-component-generator/core": "^0.2.0"
   },
   "devDependencies": {
     "raw-loader": "^4.0.1"
@@ -15,6 +14,11 @@
   "private": false,
   "publishConfig": {
     "access": "public",
-    "directory": "dist"
+    "directory": [
+      "dist",
+      "package.json",
+      "README.md",
+      "README_zh-CN.md"
+    ]
   }
 }
