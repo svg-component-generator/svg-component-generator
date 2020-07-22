@@ -2,7 +2,7 @@
   "name": "svg-component-generator",
   "private": false,
   "scripts": {
-    "bootstrap": "lerna bootstrap -- --production --no-optional",
+    "bootstrap": "lerna bootstrap",
     "test": "bash scripts/test.sh"
   },
   "devDependencies": {
